@@ -20,18 +20,14 @@ app.use( flash() );
 
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
-app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/dist/js')))
-app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 
 require('./modules/database/init/main')
 app.use( '/management', require('./modules/app/management/index.js') )
-app.use( '/', require('./modules/app/management/index.js') )
-app.use( '/', require('./modules/app/index.js') )
-app.use( '/', require('./modules/app/error.js') )
-app.use( '/', require('./modules/app/login.js') )
-app.use( '/', require('./modules/app/user/reservation.js') )
+app.use( '/service', require('./modules/app/service/index.js') )
+app.use( '/', require('./modules/app/customer/index.js') )
 
+app.use('/public', express.static(__dirname + '/public' ));
 
 app.set('trust proxy', 1)
 

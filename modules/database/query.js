@@ -19,8 +19,8 @@ async function initializeQueries( con ) {
     await createNewPreparedStatement( con, 'INSERT INTO admins(`id`, `name`, `date_joined`, `admin_level`, `password`, `last_joined`) VALUES(?, ?, ?, ?, ?, ?)', 'insertNewAdmin' )
     await createNewPreparedStatement( con, 'INSERT INTO reservations(`id`, `date`, `name`, `numbers`, `phone`, `email`, `time`, `notes`, `arrived`, `tableNumber`) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 'insertNewReservation' )
     await createNewPreparedStatement( con, 'SELECT * FROM reservations WHERE id = ?', 'getReservationData' )
-    await createNewPreparedStatement( con, "SELECT * FROM reservations WHERE (date = ? AND time > ? AND time < ? and date = CURDATE()) OR (date = ?)", 'getReservationViaDate', true )
-    await createNewPreparedStatement( con, "SELECT * FROM reservations WHERE (date = ? AND time > ? AND time < ? AND date = CURDATE() AND name LIKE CONCAT('%', ?, '%')) OR (date = ? AND name LIKE CONCAT('%', ?, '%'))", 'getReservationViaDateAndName', true )
+    await createNewPreparedStatement( con, "SELECT * FROM reservations WHERE (date = ? AND time >= ? AND time <= ?)", 'getReservationViaDate', true )
+    await createNewPreparedStatement( con, "SELECT * FROM reservations WHERE (date = ? AND time >= ? AND time <= ? AND date = CURDATE() AND name LIKE CONCAT('%', ?, '%')) OR (date = ? AND name LIKE CONCAT('%', ?, '%'))", 'getReservationViaDateAndName', true )
     await createNewPreparedStatement( con, "UPDATE admins SET session_id = ? WHERE id = ?", 'setAdminSessionID' )
     await createNewPreparedStatement( con, "SELECT session_id FROM admins WHERE id = ?", 'setAdminSessionID' )
 }

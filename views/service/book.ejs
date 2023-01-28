@@ -1,0 +1,95 @@
+
+<h1>MAIN INDEX</h1>
+
+<table class="table table-sm">
+    <thead>
+        <th>NAME</th>
+        <th>SIZE</th>
+        <th>TIME</th>
+        <th>PHONE</th>
+        <th>EMAIL</th>
+    </thead>
+    <div class="row">
+        <form method="post">
+            <div class="col-xl-8 col-12">
+                <input type="date" onchange="this.form.submit()" name="dateRequested" value="<%=dateRequested%>" style="width: 100%;" />
+            </div>
+            <div class="col-xl-2 col-6">
+                <select id="realServiceData" class="w-100 h-100"  onchange="submitServiceChange( this )">
+                    <% if (serviceTiming == "Lunch") { %>
+                        <option value="Lunch" selected="selected">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                    <% } else if (serviceTiming == "Dinner") { %>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner" selected="selected">Dinner</option>
+                    <% } %>
+                </select>
+                <input type="text" name="serviceTiming" id="serviceTiming" value="<%=serviceTiming%>" class="d-none" />
+            </div>
+            <div class="col-xl-2 col-6">
+                <input type="text" onchange="sortReservationList( this.value )" name="nameSearcher"  class="w-100 m-0 p-0" />
+            </div>
+        </form>
+
+    </div>
+    <tbody id="reservationsList">
+        
+       
+    </tbody>
+</table>
+
+<script>
+    res_data = {};
+    
+    <% for (x in reservations) { %>
+        res_data["<%=x%>"] = {
+            name: "<%=reservations[x].name%>",
+            numbers: "<%=reservations[x].numbers%>",
+            time: "<%=reservations[x].time%>",
+            phone: "<%=reservations[x].phone%>",
+            email: "<%=reservations[x].email%>"
+        }
+    <% } %>
+
+    function determineTime( timeStr ) {
+        var time = timeStr.split(":");
+        var hours = time[0];
+        var AmOrPm = hours >= 12 ? 'pm' : 'am';
+        var convertedHours = (hours % 12) || 12;
+        var minutes = time[1]; 
+        var finalTime = convertedHours + ":" + minutes + AmOrPm; 
+        return finalTime
+    }
+    function determineMatchesName( reservationName, name ) {
+        
+    }
+    function sortReservationList( name ) {
+        let reservationsList = document.getElementById('reservationsList');
+        let html = ''
+        for (x in res_data) {
+            let data = res_data[x]
+            if ( (data.name).indexOf(name) == -1 && (data.phone).indexOf(name) == -1 && (data.email).indexOf(name) == -1 && (determineTime( data.time )).indexOf(name) == -1 && (data.numbers).indexOf(name) == -1 )  { continue }
+            html += `<tr>
+                <td>${data.name}</td>
+                <td>${data.numbers}</td>
+                <td>
+                    ${determineTime( data.time )}
+                </td>
+                <td>${data.phone}</td>
+                <td>${data.email}</td>
+            </tr>`
+        }
+
+
+        reservationsList.innerHTML = html
+    }
+    sortReservationList( '' )
+    function submitServiceChange( item ) {
+        var s = document.getElementById("realServiceData")
+        var newValue = s.options[s.selectedIndex].text;
+
+        document.getElementById("serviceTiming").value = newValue
+
+        item.form.submit()
+    }
+</script>
