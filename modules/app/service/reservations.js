@@ -19,25 +19,24 @@ app.get('/reservations', validate, async (req, res) => {
             stringedTime = "17:00:00"
         }
     }
-    console.log(stringedTime)
+
     let reservationsViaDate = {}
     if (stringedTime < '16:30:00') {
-        reservationsViaDate = await queries.exec('getReservationViaDate', [stringedDate, "11:30:00", "16:29:00"]) || {}
+        reservationsViaDate = await queries.exec('getConfirmedReservationViaDate', [stringedDate, "11:30:00", "16:29:00"]) || {}
         serviceTiming = "Lunch"
     } else {
-        reservationsViaDate = await queries.exec('getReservationViaDate', [stringedDate, "16:30:00", "20:30:00"]) || {}
+        reservationsViaDate = await queries.exec('getConfirmedReservationViaDate', [stringedDate, "16:30:00", "20:30:00"]) || {}
         serviceTiming = "Dinner"
     }
+    let incoming = await dateConverter.incomingReservations()
 
-    res.render('service/core.ejs', {requestedView: 'book', data: {title: 'Admin', reservations: reservationsViaDate, dateRequested: stringedDate, serviceTiming: serviceTiming} } )
+    res.render('service/core.ejs', {requestedView: 'reservations', data: {title: 'Admin', reservations: reservationsViaDate, dateRequested: stringedDate, serviceTiming: serviceTiming, incomingReservations: incoming, skipSort: false} } )
     req.session.dateRequested = null
     req.session.serviceTiming = null
 })
 app.post('/reservations', validate, async (req, res) => {
     const dateRequested = req.body.dateRequested
     const serviceRequested = req.body.serviceTiming
-
-    console.log(dateRequested)
 
     req.session.dateRequested = dateRequested
     req.session.serviceTiming = serviceRequested

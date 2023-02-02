@@ -14,7 +14,7 @@ async function checkReservationForAvailability( body ) {
         let currentDate = new Date();
         let proposedDate = new Date( body.reservationDate + ", " + body.reservationTime + ":00");
 
-        if (currentDate > proposedDate || (currentDate.getTime() + 10800000) > proposedDate.getTime()) {
+        if (currentDate > proposedDate || (currentDate.getTime() + (60 * 60 * 1000)) > proposedDate.getTime() && currentDate == proposedDate) {
             return false
         }
 

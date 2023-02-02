@@ -1,0 +1,65 @@
+
+<%- include('./book.ejs', {
+    skipSort: skipSort,
+    reservations: reservations,
+}) %>
+
+<script>
+    res_data = {};
+    
+    <% for (x in reservations) { %>
+        res_data["<%=x%>"] = {
+            name: "<%=reservations[x].name%>",
+            numbers: "<%=reservations[x].numbers%>",
+            time: "<%=reservations[x].time%>",
+            phone: "<%=reservations[x].phone%>",
+            email: "<%=reservations[x].email%>"
+        }
+    <% } %>
+
+    function determineTime( timeStr ) {
+        var time = timeStr.split(":");
+        var hours = time[0];
+        var AmOrPm = hours >= 12 ? 'pm' : 'am';
+        var convertedHours = (hours % 12) || 12;
+        var minutes = time[1]; 
+        var finalTime = convertedHours + ":" + minutes + AmOrPm; 
+        return finalTime
+    }
+    function determineMatchesName( reservationName, name ) {
+        
+    }
+    function sortReservationList( name ) {
+        let reservationsList = document.getElementById('reservationsList');
+        let html = ''
+        for (x in res_data) {
+            let data = res_data[x]
+            if ( (data.name).indexOf(name) == -1 && (data.phone).indexOf(name) == -1 && (data.email).indexOf(name) == -1 && (determineTime( data.time )).indexOf(name) == -1 && (data.numbers).indexOf(name) == -1 )  { continue }
+            html += `<tr style="vertical-align: middle">
+                <td>${data.name}</td>
+                <td>${data.numbers}</td>
+                <td>
+                    ${determineTime( data.time )}
+                </td>
+                <td>${data.phone}</td>
+                <td>${data.email}</td>
+                <td class="w-100" style="float: right;">
+                    <button style="float: right" class="btn btn-danger p-0 mx-1"><i class='bx bx-trash nav_icon w-100 h-100 ms-auto p-2'  ></i></button>
+                    <button style="float: right" class="btn btn-secondary p-0" style="height:2rem; width: 2rem"><i class='bx bx-pencil nav_icon w-100 h-100 ms-auto p-2'  ></i></button>
+                </td>
+            </tr>`
+        }
+
+
+        reservationsList.innerHTML = html
+    }
+    sortReservationList( '' )
+    function submitServiceChange( item ) {
+        var s = document.getElementById("realServiceData")
+        var newValue = s.options[s.selectedIndex].text;
+
+        document.getElementById("serviceTiming").value = newValue
+
+        item.form.submit()
+    }
+</script>

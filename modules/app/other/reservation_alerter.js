@@ -1,3 +1,5 @@
+const queries = require('../../database/query')
+
 function turnToDate( dateRequested ) {
     let stringedDate = dateRequested
     let stringedTime = "00:00:00"
@@ -12,12 +14,13 @@ function turnToDate( dateRequested ) {
     return [stringedDate, stringedTime]
 }
 async function hasIncomingBookings() {
-    let incomingReservations = await queries.exec('getIncomingBookings', [stringedDate])
-    if (incomingReservations.count > 0) {
+    let incomingReservations = await queries.exec('getIncomingReservations', [])
+    if (Object.keys(incomingReservations).length > 0) {
         return true
     }
     return false
 }
 module.exports = {
-    convertDate: turnToDate
+    convertDate: turnToDate,
+    incomingReservations: hasIncomingBookings
 }

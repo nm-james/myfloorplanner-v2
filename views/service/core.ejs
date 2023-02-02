@@ -17,7 +17,9 @@
                 <div class="nav_list"> 
                     <a href="/service" class="nav_link"> <i class='bx bx-signal-5 nav_icon'></i> <span class="nav_name">Dashboard</span> </a> 
                     <a href="/service/reservations" class="nav_link"> <i class='bx bx-blanket nav_icon'></i> <span class="nav_name">Reservations</span> </a> 
-                    <a href="#" class="nav_link" id="incomingAlert"> <i class='bx bx-message-alt-error nav_icon'></i> <span class="nav_name">Incoming</span> </a> 
+                    <% if (data.incomingReservations) { %>
+                        <a href="/service/incoming" class="nav_link" id="incomingAlert"> <i class='bx bx-message-alt-error nav_icon'></i> <span class="nav_name">Incoming</span> </a> 
+                    <% } %>
                     <a href="#" class="nav_link"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Floor Plan</span> </a> 
                 </div>
             </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>

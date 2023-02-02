@@ -10,6 +10,11 @@ let databaseTables = [
 
     },
     {
+        name: 'reservation_arrivals',
+        columns: ['id', 'reservation_id', 'arrival_status']
+
+    },
+    {
         name: 'admins',
         columns: ['id', 'name', 'date_joined', 'admin_level', 'password', 'last_joined', 'session_id']
     },
@@ -19,6 +24,7 @@ let defaultDataType = {
     "admin_level": 'INT',
     "last_joined": 'BIGINT',
     "arrived": 'BOOLEAN',
+    "arrival_status": 'BOOLEAN',
     "tableNumber": "INT",
     "time": "TIME"
 }
