@@ -5,4 +5,5 @@ app.get('/error', (req, res) => {
     res.render('misc/error.ejs')
 })
 
+
 module.exports = app;

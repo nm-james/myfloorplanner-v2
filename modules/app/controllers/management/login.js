@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express.Router();
-const passport = require('../other/passport')
-const reverseValidate = passport.reverseValidate
+const passport = require('../../other/passport')
+const reverseValidate = passport.reverseValidateAdmin
 const checkPassword = passport.authenticateAdmin
 
 app.get('/login', reverseValidate, (req, res) => {
-    res.render('service/login.ejs' )
+    res.render('management/login.ejs' )
 })
 app.post('/login', async (req, res) => {
     let password = req.body.password || ""

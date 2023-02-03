@@ -1,9 +1,9 @@
-const queries = require('../../database/query')
+const queries = require('../../../database/query')
 const express = require('express');
 const app = express.Router();
-const passport = require('../other/passport')
+const passport = require('../../other/passport')
 const validate = passport.validateservice
-const dateConverter = require('../other/reservation_alerter')
+const dateConverter = require('../../other/reservation_alerter')
 
 app.get('/reservations', validate, async (req, res) => {
     let data = dateConverter.convertDate( req.session.dateRequested )

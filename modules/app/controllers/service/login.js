@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express.Router();
-const passport = require('../other/passport')
+const passport = require('../../other/passport')
 const reverseValidate = passport.reverseValidateservice
 const checkPassword = passport.authenticateservice
 

@@ -21,16 +21,21 @@ app.use( flash() );
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
-
-require('./modules/database/init/main')
-app.use( '/management', require('./modules/app/management/index.js') )
-app.use( '/service', require('./modules/app/service/index.js') )
-app.use( '/', require('./modules/app/customer/index.js') )
-
 app.use('/public', express.static(__dirname + '/public' ));
 
-app.set('trust proxy', 1)
+require('./modules/database/init/main')
+app.use( '/', require('./modules/app/controllers/customer/index.js') )
+app.use( '/management', require('./modules/app/controllers/management/index.js') )
+app.use( '/service', require('./modules/app/controllers/service/index.js') )
+app.use( '/', require('./modules/app/other/error.js') )
 
+// error handling
+app.use( (req, res) => {
+    res.status(404);
+    res.redirect('/error')
+} )
+
+app.set('trust proxy', 1)
 app.set('view engine', 'ejs');
 
 

@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express.Router();
-const passport = require('../other/passport')
+const passport = require('../../other/passport')
 const validation = passport.validate
 const reverseValidation = passport.reverseValidate
 const authenticateAdmin = passport.authenticateAdmin
 
-app.get('/index', (req, res) => {
+app.use( '/', require('./login.js') )
+
+app.get('/', (req, res) => {
     res.render('management/index.ejs')
 })
 

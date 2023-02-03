@@ -1,6 +1,6 @@
 const emailValidator = require('deep-email-validator');
-const sender = require('../../email/send');
-const queries = require('../../database/query')
+const sender = require('../../../email/send');
+const queries = require('../../../database/query')
 const uuid = require('uuid');
 
 const express = require('express');

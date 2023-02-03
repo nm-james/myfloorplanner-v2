@@ -29,8 +29,8 @@
         return finalTime
     }
     function sendFormPost( btn, id, value ) {
-        console.log('hello', id)
         document.getElementById("status" + id).value = value;
+        btn.form.submit()
     }
     function sortReservationList( name ) {
         let reservationsList = document.getElementById('reservationsList');
@@ -51,8 +51,8 @@
                     <form method="POST">
                         <input type="text" style="display: none" name="status" id="${"status" + data.id}" value="0" />
                         <input type="text" style="display: none" name="reservationid" value="${data.id}" />
-                        <button type="button" style="float: right" class="btn btn-danger p-0" style="height:2rem; width: 2rem" onclick="sendFormPost( this, ${data.id}, 0 )"><i class='bx bx-x nav_icon w-100 h-100 ms-auto p-2'  ></i></button>
-                        <button type="button" style="float: right" class="btn btn-success p-0 mx-1" onclick="sendFormPost( this, '${console.log(data.id)}', 1 )"><i class='bx bx-check nav_icon w-100 h-100 ms-auto p-2'  ></i></button>
+                        <button type="button" style="float: right" class="btn btn-danger p-0" style="height:2rem; width: 2rem" onclick="sendFormPost( this, '${data.id}', 0 )"><i class='bx bx-x nav_icon w-100 h-100 ms-auto p-2'  ></i></button>
+                        <button type="button" style="float: right" class="btn btn-success p-0 mx-1" onclick="sendFormPost( this, '${data.id}', 1 )"><i class='bx bx-check nav_icon w-100 h-100 ms-auto p-2'  ></i></button>
                     </form>
                     
                 </td>
