@@ -20,6 +20,11 @@ async function checkReservationForAvailability( body ) {
 
         let email = body.reservationEmail
         const isValid = await emailValidator.validate( email )
+
+        if (email.search("hotmail.com") != -1) {
+            const validators = isValid.validators
+            return (validators.regex.valid && validators.typo.valid && validators.disposable.valid && validators.mx.valid)
+        }
         return isValid.valid
     }
     return false
